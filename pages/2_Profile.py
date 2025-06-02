@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Replace with your actual endpoints
-PROFILE_URL = "http://127.0.0.1:8000/admin/viewProfile"
+PROFILE_URL = "http://35.154.166.48:8000/admin/viewProfile"
 UPDATE_PROFILE_URL = "http://your-api-url.com/update-profile"
 
 st.set_page_config(page_title="View & Update Profile", page_icon="🧾")
@@ -42,15 +42,25 @@ with st.form("profile_update_form"):
     enterprise_type = st.text_input("Enterprise Type", value=profile_data.get('enterprise_type', 'N/A'))
     industry_category = st.text_input("Industry Category", value=profile_data.get('industry_category', 'N/A'))
     women_led = st.selectbox("Women-led", ["Yes", "No"], index=0 if profile_data.get('women_led', 'N/A') else 1)
+    
+    social_caste_options = ["General", "SC", "ST", "OBC", "Minority", "Other"]
+    social_caste_value = profile_data.get('social_caste', 'General')
+    if social_caste_value not in social_caste_options:
+        social_caste_value = social_caste_options[0]
     social_caste = st.selectbox(
         "Social Caste",
-        ["General", "SC", "ST", "OBC", "Minority", "Other"],
-        index=["General", "SC", "ST", "OBC", "Minority", "Other"].index(profile_data.get('social_caste', 'N/A'))
+        social_caste_options,
+        index=social_caste_options.index(social_caste_value)
     )
+
+    state_options = ["Andhra Pradesh", "Telangana", "Karnataka", "Maharashtra", "Tamil Nadu", "Kerala", "Delhi", "Other"]
+    state_value = profile_data.get('state', 'Andhra Pradesh')
+    if state_value not in state_options:
+        state_value = state_options[0]
     state = st.selectbox(
         "State",
-        ["Andhra Pradesh", "Telangana", "Karnataka", "Maharashtra", "Tamil Nadu", "Kerala", "Delhi", "Other"],
-        index=["Andhra Pradesh", "Telangana", "Karnataka", "Maharashtra", "Tamil Nadu", "Kerala", "Delhi", "Other"].index(profile_data.get('state', 'N/A'))
+        state_options,
+        index=state_options.index(state_value)
     )
     district = st.text_input("District", value=profile_data.get('district', 'N/A'))
 

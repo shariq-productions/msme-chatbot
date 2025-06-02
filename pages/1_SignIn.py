@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-BASE_URL = "http://127.0.0.1:8000"  # Replace with your actual API base URL
+BASE_URL = "http://35.154.166.48:8000"  # Replace with your actual API base URL
 
 st.set_page_config(page_title="Auth App", page_icon="🔐")
 

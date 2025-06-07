@@ -3,6 +3,26 @@ import requests
 
 BASE_URL = "http://35.154.166.48:8000"  # change this to your backend base URL
 
+# --- Set your default credentials here ---
+DEFAULT_EMAIL = "shariq@gmail.com"
+DEFAULT_PASSWORD = "shariq@123"
+
+if "bearer_token" not in st.session_state:
+    try:
+        res = requests.post(
+            f"{BASE_URL}/user/login",
+            data={"username": DEFAULT_EMAIL, "password": DEFAULT_PASSWORD}
+        )
+        if res.status_code == 201:
+            st.session_state.bearer_token = res.json()["access_token"]
+        else:
+            st.error("Failed to auto-login. Check credentials.")
+            st.stop()
+    except Exception as e:
+        st.error(f"Auto-login error: {e}")
+        st.stop()
+
+
 st.set_page_config(page_title="Chatbot", page_icon="💬")
 st.title("💬 MSME Chatbot")
 st.caption("🧠 Powered by your backend & OpenAI")
